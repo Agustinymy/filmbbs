@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery/jquery.min.js"></script>
+    <script src="js/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+    <script src="js/jquery.validation/1.14.0/messages_zh.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <form id="registerForm" style="margin-left: 70px">
+        <br/>
+        <div class="form-group">
+            <label for="uname">账号：</label>
+            <input type="text" class="form-control" id="uname" name="uname" placeholder="输入邮箱名" style="width: 300px">
+            <span id="unameerror"></span>
+        </div>
+        <div class="form-group">
+            <label for="upass">密码：</label>
+            <input type="text" class="form-control" id="upass" name="upass" placeholder="输入密码" style="width: 300px">
+        </div>
+        <div class="form-group">
+            <label for="con_upass">确认密码：</label>
+            <input type="text" class="form-control" id="con_upass" name="con_upass" placeholder="再次输入密码" style="width: 300px">
+        </div>
+        <div class="form-group">
+            <input type="submit" id="registerBtn" value="注册" class="btn btn-success"/>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+
+        $().ready(function() {
+            $("#registerForm").validate({
+                submitHandler: function() {
+                    $.ajax({
+                        type:'POST',
+                        dataType:'json',
+                        url:"/user/userAction_registerExit.action",
+                        data:{
+                            uname:$("#uname").val(),
+                            upass:$("#upass").val()
+                        },
+                        success:function (result) {
+                            var d = eval("("+result+")");
+                            if(d.result == "false"){
+                                //用户名已存在
+                                $("#unameerror").html("用户名已存在!");
+                                return;
+                            }
+                        }
+                    });
+                },
+                rules:{
+                    uname:{
+                        required:true,
+                        email:true,
+                    },
+                    upass:{
+                        required:true,
+                        minlength:6
+                    },
+                    con_upass:{
+                        required:true,
+                        minlength:6,
+                        equalTo:"#upass"
+                    }
+                },
+                messages:{
+                    uname:{
+                        required:"请输入邮箱",
+                        email:"请符合邮箱格式"
+                    },
+                    upass:{
+                        required:"请输入密码",
+                        minlength:"密码长度不小于6个字母"
+                    },
+                    con_upass:{
+                        required:"",
+                        minlength:"密码长度不小于6个字母",
+                        equalTo:"密码不一致"
+                    }
+                }
+            });
+
+        });
+
+</script>
+</body>
+</html>
