@@ -20,4 +20,6 @@ public interface IUserDao {
 
     int addUser(User user);
 
+    User selectUserExit(User user);
+
 }

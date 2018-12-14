@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery/jquery.min.js"></script>
+    <script src="js/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+    <script src="js/jquery.validation/1.14.0/messages_zh.min.js"></script>
+</head>
+
+<script type="text/javascript">
+    function registerBtn() {
+        var th = document.registerForm;
+        if (th.user.uname.value == "") {
+            alert("用户名不能为空");
+            th.user.uname.focus();
+            return;
+        }
+
+        if (th.upass.value == "") {
+            alert("密码不能为空");
+            th.upass.focus();
+            return;
+        }
+
+        th.action="loginExit";
+        th.submit();
+    }
+</script>
+<body>
+<div class="container">
+    <form id="loginForm" style="margin-left: 70px">
+        <br/>
+        <div class="form-group">
+            <label for="uname">账号：</label>
+            <input type="text" class="form-control" id="uname" name="uname" placeholder="输入邮箱名" style="width: 300px">
+            <span id="unameerror"></span>
+        </div>
+        <div class="form-group">
+            <label for="upass">密码：</label>
+            <input type="password" class="form-control" id="upass" name="upass" placeholder="输入密码" style="width: 300px">
+        </div>
+        <div class="form-group">
+            <input type="button" onclick="registerBtn()" value="登录" class="btn btn-success"/>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

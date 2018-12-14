@@ -32,4 +32,15 @@ public class UserServiceImpl implements IUserService {
 
         return userDao.addUser(user);
     }
+
+    @Override
+    public boolean selectUserExit(User user) {
+        User user1 = userDao.selectUserExit(user);
+        if(user1 != null){
+            if(user1.getUname().equals(user.getUname())){
+                return true;
+            }
+        }
+        return false;
+    }
 }

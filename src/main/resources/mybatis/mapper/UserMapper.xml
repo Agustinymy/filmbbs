@@ -17,4 +17,8 @@
         insert into user(uname,upass) values (#{uname},#{upass})
     </insert>
 
+    <select id="selectUserExit" parameterType="User" resultType="User">
+        select <include refid="userCols"/> from user where uname = #{uname} and upass = #{upass}
+    </select>
+
 </mapper>

@@ -9,8 +9,39 @@
     <script src="js/jquery/jquery.min.js"></script>
     <script src="js/jquery.validation/1.14.0/jquery.validate.min.js"></script>
     <script src="js/jquery.validation/1.14.0/messages_zh.min.js"></script>
+    <script type="text/javascript">
+         function registerBtn() {
+             var th = document.registerForm;
+             if (th.uname.value == "") {
+                     alert("用户名不能为空");
+                     th.uname.focus();
+                     return;
+                 }
+
+             if (th.upass.value == "") {
+                     alert("密码不能为空");
+                     th.upass.focus();
+                     return;
+                 }
+             if ((th.upass.value).length<6) {
+                     alert("密码长度小于6安全等级太低");
+                     th.upass.focus();
+                    return;
+                 }
+
+                 if (th.upass.value != th.con_upass.value) {
+                     alert("两次密码输入不同");
+                     th.upass.focus();
+                     return;
+                 }
+
+             th.action="registerExit";
+             th.submit();
+         }
+    </script>
 </head>
 <body>
+<h1>${message}</h1>
 <div class="container">
     <form id="registerForm" style="margin-left: 70px">
         <br/>
@@ -28,12 +59,12 @@
             <input type="text" class="form-control" id="con_upass" name="con_upass" placeholder="再次输入密码" style="width: 300px">
         </div>
         <div class="form-group">
-            <input type="submit" id="registerBtn" value="注册" class="btn btn-success"/>
+            <input type="button" onclick="registerBtn()" value="注册" class="btn btn-success"/>
         </div>
     </form>
 </div>
 
-<script type="text/javascript">
+<!--<script type="text/javascript">
 
         $().ready(function() {
             $("#registerForm").validate({
@@ -47,12 +78,7 @@
                             upass:$("#upass").val()
                         },
                         success:function (result) {
-                            var d = eval("("+result+")");
-                            if(d.result == "false"){
-                                //用户名已存在
-                                $("#unameerror").html("用户名已存在!");
-                                return;
-                            }
+                            alert(result);
                         }
                     });
                 },
@@ -90,6 +116,7 @@
 
         });
 
-</script>
+</script>-->
+
 </body>
 </html>

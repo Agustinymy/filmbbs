@@ -19,7 +19,7 @@
 
 
     <package name="default" extends="json-default,struts-default" namespace="/user">
-        <action name="userAction_*" class="com.ymy.action.UserAction" method="{1}">
+        <action name="userAction_*" class="com.ymy.action.UserController" method="{1}">
             <result name="success" type="json">
                 <param name="root">result</param>
             </result>

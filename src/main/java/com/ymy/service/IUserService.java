@@ -17,4 +17,6 @@ public interface IUserService {
     List<User> selectNameExit(User user);
 
     int addUser(User user);
+
+    boolean selectUserExit(User user);
 }
