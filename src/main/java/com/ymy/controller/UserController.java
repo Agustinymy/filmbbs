@@ -4,10 +4,11 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.ymy.dao.IUserDao;
 import com.ymy.entity.User;
 import com.ymy.service.IUserService;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +27,7 @@ import java.util.Map;
  */
 // 告诉spring mvc这是一个控制器类
 @Controller
-@RequestMapping("")
+@RequestMapping("/userForm")
 public class UserController extends ActionSupport {
 
     @Autowired
@@ -35,7 +36,7 @@ public class UserController extends ActionSupport {
     @Autowired
     private IUserDao userDao;
 
-    @RequestMapping("registerExit")
+    @RequestMapping("/registerExit")
     public ModelAndView registerExit(User user){
         ModelAndView mav = new ModelAndView();
         List<User> list =userService.selectNameExit(user);
@@ -52,10 +53,18 @@ public class UserController extends ActionSupport {
         return mav;
     }
 
-    @RequestMapping("loginExit")
-    public String loginExit(User user, HttpServletRequest request){
+    @RequestMapping("/loginExit")
+    @ResponseBody
+    public Map loginExit(@RequestParam("uname")String uname,@RequestParam("upass")String upass, HttpServletRequest request){
+        Map<String,Object> model = new HashMap<>();
         HttpSession session = request.getSession();
+        User user = new User();
+        user.setUname(uname);
+        user.setUpass(upass);
+        System.out.println(uname);
+        System.out.println(upass);
         boolean b = userService.selectUserExit(user);
+        int res = 0;
         if (b){
             //如果验证通过，则将用户信息传到前台
             User user1 = userDao.selectUserExit(user);
@@ -64,19 +73,21 @@ public class UserController extends ActionSupport {
             session.setAttribute("uflag",user1.getUflag());
             session.setAttribute("ustate",user1.getUstate());
             request.setAttribute("message","登录成功");
-            return "index";
+            res=1;
         }else {
             request.setAttribute("message","账号或密码错误");
-            return "login";
+            res=0;
         }
+        model.put("res",res);
+        return model;
     }
 
-    @RequestMapping("register")
+    @RequestMapping("/register")
     public String register(){
         return "register";
     }
 
-    @RequestMapping("login")
+    @RequestMapping("/login")
     public String login(){
         return "login";
     }

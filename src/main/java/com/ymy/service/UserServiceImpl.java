@@ -43,4 +43,12 @@ public class UserServiceImpl implements IUserService {
         }
         return false;
     }
+
+    public IUserDao getUserDao() {
+        return userDao;
+    }
+
+    public void setUserDao(IUserDao userDao) {
+        this.userDao = userDao;
+    }
 }

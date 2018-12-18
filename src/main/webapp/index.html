@@ -16,7 +16,7 @@
               <div class="head-a fr">
                    <div class="head-a1 fl"><a href=""><img src="images/tb-a.png"></a></div>
                    <div class="head-a1 fl"><a href=""><img src="images/tb-b.png"></a></div>
-                   <div class="head-a3 login-click fl"><button type="button" id="loginBtn">登录</button>登录</div>
+                   <div class="head-a3 login-click fl" id="loginBtn">登录</div>
                   <div class="head-a4 reg-click fl" id="registerBtn">注册</div>
               
               </div>
@@ -342,10 +342,7 @@
                          <div class="kg-y"><img src="images/kg-y.png"></div>
                </div></a>
           </div>
-                 
-                 
-          </div> 
-          
+          </div>
           <div class="idx-btm"><a href=""><img src="upload/act-f.jpg"></a></div>
     </div><!--wrap-->  
 </div>
@@ -434,6 +431,23 @@ win.scroll(function(){
                console.log(layero, index);
            }
     }) ;
+    });
+</script>
+<!--登录-->
+<script type="text/javascript">
+    $("#loginBtn").click(function () {
+        layer.open({
+            type:2,
+            title:'登录',
+            fix:false,
+            maxmin:true,
+            shadeClose:true,
+            area:['500px','500px'],
+            content:['login.html','no'],
+            success: function(layero, index){
+                console.log(layero, index);
+            }
+        }) ;
     });
 </script>
 </body>

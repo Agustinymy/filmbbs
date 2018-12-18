@@ -11,28 +11,10 @@
     <script src="js/jquery.validation/1.14.0/messages_zh.min.js"></script>
 </head>
 
-<script type="text/javascript">
-    function registerBtn() {
-        var th = document.registerForm;
-        if (th.user.uname.value == "") {
-            alert("用户名不能为空");
-            th.user.uname.focus();
-            return;
-        }
 
-        if (th.upass.value == "") {
-            alert("密码不能为空");
-            th.upass.focus();
-            return;
-        }
-
-        th.action="loginExit";
-        th.submit();
-    }
-</script>
 <body>
 <div class="container">
-    <form id="loginForm" style="margin-left: 70px">
+    <form id="loginForm" style="margin-left: 70px"  method="post">
         <br/>
         <div class="form-group">
             <label for="uname">账号：</label>
@@ -44,10 +26,10 @@
             <input type="password" class="form-control" id="upass" name="upass" placeholder="输入密码" style="width: 300px">
         </div>
         <div class="form-group">
-            <input type="button" onclick="registerBtn()" value="登录" class="btn btn-success"/>
+            <input type="submit" id="btnLogin" value="登录" class="btn btn-success" style="margin-left: 200px"/>
         </div>
     </form>
 </div>
-
+<script src="js/htmljs/login.js"></script>
 </body>
 </html>
