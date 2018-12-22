@@ -37,49 +37,69 @@ public class UserController extends ActionSupport {
     private IUserDao userDao;
 
     @RequestMapping("/registerExit")
-    public ModelAndView registerExit(User user){
-        ModelAndView mav = new ModelAndView();
-        List<User> list =userService.selectNameExit(user);
-        if(user.getUname()!=null && user.getUname() != ""){
-            if (list.size() >= 0){
-                //说明该用户名存在
-                mav.addObject("message","用户已存在");
-                mav.setViewName("register");
-            }else {
-                userService.addUser(user);
-                mav.setViewName("login");
+    @ResponseBody
+    public Map<String,Object> registerExit(User user){
+        System.out.println(user);
+        Map<String,Object> map = new HashMap<>();
+        int res=0;
+        if(user.getUname()!=null && user.getUname() != "" && user.getUpass()!=null && user.getUpass()!=""){
+            try {
+                res=userService.addUser(user);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (res>0){
+                map.put("res",true);
+                return map;
             }
         }
-        return mav;
+        return map;
     }
 
+    /**
+     * @author hyj
+     * @param uname
+     * @return
+     * 异步显示用户注册账户时的账号占用信息
+     */
+    @RequestMapping(value = "/checkUname")
+    @ResponseBody
+    public Map<String,Object> checkUserByName(@RequestParam("uname")String uname){
+        Map<String,Object> map = new HashMap<>();
+        int res=userService.selectNameExit(uname);
+        if (res>0){
+            map.put("res",true);
+            return map;
+        }
+        map.put("res",false);
+        return map;
+    }
     @RequestMapping("/loginExit")
     @ResponseBody
-    public Map loginExit(@RequestParam("uname")String uname,@RequestParam("upass")String upass, HttpServletRequest request){
-        Map<String,Object> model = new HashMap<>();
+    public Map<String,Object> loginExit(@RequestParam("uname")String uname,@RequestParam("upass")String upass, HttpServletRequest request){
+        Map<String,Object> map = new HashMap<>();
         HttpSession session = request.getSession();
         User user = new User();
         user.setUname(uname);
         user.setUpass(upass);
-        System.out.println(uname);
-        System.out.println(upass);
-        boolean b = userService.selectUserExit(user);
+        System.out.println(uname+":"+upass);
+        try {
+            user = userService.selectUserExit(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         int res = 0;
-        if (b){
-            //如果验证通过，则将用户信息传到前台
-            User user1 = userDao.selectUserExit(user);
-            session.setAttribute("uname",user1.getUname());
-            session.setAttribute("upass",user1.getUpass());
-            session.setAttribute("uflag",user1.getUflag());
-            session.setAttribute("ustate",user1.getUstate());
-            request.setAttribute("message","登录成功");
+        if (user!=null){
+            //用户存在，可登录
+            session.setAttribute("message","登录成功");
+            map.put("user",user);
             res=1;
         }else {
-            request.setAttribute("message","账号或密码错误");
+            session.setAttribute("message","账号或密码错误");
             res=0;
         }
-        model.put("res",res);
-        return model;
+        map.put("res",res);
+        return map;
     }
 
     @RequestMapping("/register")
@@ -92,11 +112,9 @@ public class UserController extends ActionSupport {
         return "login";
     }
 
-    public IUserService getUserService() {
-        return userService;
-    }
 
-    public void setUserService(IUserService userService) {
+
+    public void setUserService(UserServiceImpl userService) {
         this.userService = userService;
     }
 

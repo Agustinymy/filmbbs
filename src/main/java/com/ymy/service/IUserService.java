@@ -14,9 +14,9 @@ import java.util.List;
  */
 public interface IUserService {
 
-    List<User> selectNameExit(User user);
+    int selectNameExit(String uname);
 
     int addUser(User user);
 
-    boolean selectUserExit(User user);
+    User selectUserExit(User user);
 }

@@ -5,6 +5,12 @@
 <title>电影论坛</title>
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="./css/bootstrap.min.css">
+<link rel="stylesheet" href="./js/laypage/skin/laypage.css">
+<script type="text/javascript" src="./js/vue/vue.min.js"></script>
+<script type="text/javascript" src="./js/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="./js/layer/layer.js"></script>
+<script type="text/javascript" src="./js/laypage/laypage.js"></script>
 </head>
 
 <body>
@@ -88,12 +94,12 @@
                                </div>
                                <div class="tjk">
                                     <ul class="art-ul">
-                                         <a href=""><li><div class="art-list">
-                                                          <div class="art-d fl"><a href="article-details.html"><a href="article-details.html"><img src="upload/col-a1.jpg"></a></a></div>
+                                         <a href=""><li><div class="art-list" v-for="{item,index} in result">
+                                                          <div class="art-d fl"><a href="article-details.html"><img src="{{item.tfile}}"></a></div>
                                                           <div class="art-e fl">
-                                                                <div class="col-b1">教你如何一步步把妹子泡到手</div>
-                                                                <div class="col-b2">电影论坛<span>2015-11-02</span></div>
-                                                                <div class="col-b3">爱情的残酷之处在于，并不是你做了什么帮助你获得了女孩的欢心。</div>
+                                                                <div class="col-b1">{{item.tname}}</div>
+                                                                <div class="col-b2">电影论坛<span>{{item.ttime}}</span></div>
+                                                                <div class="col-b3">{{item.content}}</div>
                                                           </div>
                                                           <div class="art-f">
                                                                 <span><img src="images/col-c1.jpg">0</span>

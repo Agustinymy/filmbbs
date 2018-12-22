@@ -9,36 +9,7 @@
     <script src="js/jquery/jquery.min.js"></script>
     <script src="js/jquery.validation/1.14.0/jquery.validate.min.js"></script>
     <script src="js/jquery.validation/1.14.0/messages_zh.min.js"></script>
-    <script type="text/javascript">
-         function registerBtn() {
-             var th = document.registerForm;
-             if (th.uname.value == "") {
-                     alert("用户名不能为空");
-                     th.uname.focus();
-                     return;
-                 }
 
-             if (th.upass.value == "") {
-                     alert("密码不能为空");
-                     th.upass.focus();
-                     return;
-                 }
-             if ((th.upass.value).length<6) {
-                     alert("密码长度小于6安全等级太低");
-                     th.upass.focus();
-                    return;
-                 }
-
-                 if (th.upass.value != th.con_upass.value) {
-                     alert("两次密码输入不同");
-                     th.upass.focus();
-                     return;
-                 }
-
-             th.action="registerExit";
-             th.submit();
-         }
-    </script>
 </head>
 <body>
 <h1>${message}</h1>
@@ -63,60 +34,78 @@
         </div>
     </form>
 </div>
+<script type="text/javascript">
+    function registerBtn() {
+        var uname=$("#uname").val();
+        var upass=$("#upass").val();
+        var con_upass=$("#con_upass").val();
+        var nameLock=0;
+        var pwdLock=0;
+        var checkPwdLock=0;
+        if ( uname== "") {
+            alert("用户名不能为空");
+            $("#uname").focus();
+            return;
+        }else{
+            nameLock=1;
+        }
+        if ( upass== "") {
+            alert("密码不能为空");
+            $("#upass").focus();
+            return;
+        }else{
+            pwdLock=1;
+        }
+        if ((upass).length<6) {
+            alert("密码长度小于6安全等级太低");
+            $("#upass").focus();
+            return;
+        }
 
-<!--<script type="text/javascript">
+        if (upass!=con_upass) {
+            alert("两次密码输入不同");
+            $("#upass").focus();
+            return;
+        }else {
+            checkPwdLock = 1;
+        }
 
-        $().ready(function() {
-            $("#registerForm").validate({
-                submitHandler: function() {
-                    $.ajax({
-                        type:'POST',
-                        dataType:'json',
-                        url:"/user/userAction_registerExit.action",
-                        data:{
-                            uname:$("#uname").val(),
-                            upass:$("#upass").val()
-                        },
-                        success:function (result) {
-                            alert(result);
-                        }
-                    });
-                },
-                rules:{
-                    uname:{
-                        required:true,
-                        email:true,
-                    },
-                    upass:{
-                        required:true,
-                        minlength:6
-                    },
-                    con_upass:{
-                        required:true,
-                        minlength:6,
-                        equalTo:"#upass"
-                    }
-                },
-                messages:{
-                    uname:{
-                        required:"请输入邮箱",
-                        email:"请符合邮箱格式"
-                    },
-                    upass:{
-                        required:"请输入密码",
-                        minlength:"密码长度不小于6个字母"
-                    },
-                    con_upass:{
-                        required:"",
-                        minlength:"密码长度不小于6个字母",
-                        equalTo:"密码不一致"
+        if(nameLock==1 && pwdLock == 1 && checkPwdLock==1){
+            var uname=$("#uname").val();
+            var upass=$("#upass").val();
+            $.ajax({
+                type:'POST',
+                url:'/userForm/registerExit.do?uname='+uname+'&upass='+upass,
+                success:function (data) {
+                    if(data.res){
+                        alert('注册成功!');
+                    }else{
+                        alert('注册失败!');
                     }
                 }
-            });
-
-        });
-
-</script>-->
+            })
+        }
+    }
+    $("#uname").blur(function () {
+        var uname=$("#uname").val();
+        if(uname!=null && uname!=""){
+            $.ajax({
+                type:'POST',
+                data:uname,
+                url:'/userForm/checkUname.do?uname='+uname,
+                success:function (data) {
+                    if(data.res){
+                        $("#unameerror").html('账号已被注册!');
+                    }else{
+                        $("#unameerror").html('账号可以使用!');
+                    }
+                }
+            })
+        }else{
+            alert('账户不能为空!');
+        }
+    });
+</script>
 
 </body>
 </html>

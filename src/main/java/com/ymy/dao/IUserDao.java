@@ -1,6 +1,7 @@
 package com.ymy.dao;
 
 import com.ymy.entity.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
 @Repository
 public interface IUserDao {
 
-    List<User> selectNameExit(User user);
+    int selectNameExit(@Param("uname")String uname);
 
     int addUser(User user);
 

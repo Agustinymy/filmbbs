@@ -22,9 +22,9 @@ public class UserServiceImpl implements IUserService {
     private IUserDao userDao;
 
     @Override
-    public List<User> selectNameExit(User user) {
+    public int selectNameExit(String uname) {
 
-        return userDao.selectNameExit(user);
+        return userDao.selectNameExit(uname);
     }
 
     @Override
@@ -34,14 +34,8 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public boolean selectUserExit(User user) {
-        User user1 = userDao.selectUserExit(user);
-        if(user1 != null){
-            if(user1.getUname().equals(user.getUname())){
-                return true;
-            }
-        }
-        return false;
+    public User selectUserExit(User user) {
+        return userDao.selectUserExit(user);
     }
 
     public IUserDao getUserDao() {
