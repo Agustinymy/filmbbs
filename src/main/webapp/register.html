@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery/jquery.min.js"></script>
+    <script src="js/jquery.validation/1.14.0/jquery.validate.min.js"></script>
+    <script src="js/jquery.validation/1.14.0/messages_zh.min.js"></script>
+
+</head>
+<body>
+<h1>${message}</h1>
+<div class="container">
+    <form id="registerForm" style="margin-left: 70px">
+        <br/>
+        <div class="form-group">
+            <label for="uname">账号：</label>
+            <input type="text" class="form-control" id="uname" name="uname" placeholder="输入邮箱名" style="width: 300px">
+            <span id="unameerror"></span>
+        </div>
+        <div class="form-group">
+            <label for="upass">密码：</label>
+            <input type="text" class="form-control" id="upass" name="upass" placeholder="输入密码" style="width: 300px">
+        </div>
+        <div class="form-group">
+            <label for="con_upass">确认密码：</label>
+            <input type="text" class="form-control" id="con_upass" name="con_upass" placeholder="再次输入密码" style="width: 300px">
+        </div>
+        <div class="form-group">
+            <input type="button" onclick="registerBtn()" value="注册" class="btn btn-success"/>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    function registerBtn() {
+        var uname=$("#uname").val();
+        var upass=$("#upass").val();
+        var con_upass=$("#con_upass").val();
+        var nameLock=0;
+        var pwdLock=0;
+        var checkPwdLock=0;
+        if ( uname== "") {
+            alert("用户名不能为空");
+            $("#uname").focus();
+            return;
+        }else{
+            nameLock=1;
+        }
+        if ( upass== "") {
+            alert("密码不能为空");
+            $("#upass").focus();
+            return;
+        }else{
+            pwdLock=1;
+        }
+        if ((upass).length<6) {
+            alert("密码长度小于6安全等级太低");
+            $("#upass").focus();
+            return;
+        }
+
+        if (upass!=con_upass) {
+            alert("两次密码输入不同");
+            $("#upass").focus();
+            return;
+        }else {
+            checkPwdLock = 1;
+        }
+
+        if(nameLock==1 && pwdLock == 1 && checkPwdLock==1){
+            var uname=$("#uname").val();
+            var upass=$("#upass").val();
+            $.ajax({
+                type:'POST',
+                url:'/userForm/registerExit.do?uname='+uname+'&upass='+upass,
+                success:function (data) {
+                    if(data.res){
+                        alert('注册成功!');
+                    }else{
+                        alert('注册失败!');
+                    }
+                }
+            })
+        }
+    }
+    $("#uname").blur(function () {
+        var uname=$("#uname").val();
+        if(uname!=null && uname!=""){
+            $.ajax({
+                type:'POST',
+                data:uname,
+                url:'/userForm/checkUname.do?uname='+uname,
+                success:function (data) {
+                    if(data.res){
+                        $("#unameerror").html('账号已被注册!');
+                    }else{
+                        $("#unameerror").html('账号可以使用!');
+                    }
+                }
+            })
+        }else{
+            alert('账户不能为空!');
+        }
+    });
+</script>
+
+</body>
+</html>
