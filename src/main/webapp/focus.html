@@ -20,8 +20,8 @@
                    </div>
                    <div class="head-a1 fl"><a href=""><img src="images/tb-a.png"></a></div>
                    <div class="head-a1 fl"><a href=""><img src="images/tb-b.png"></a></div>
-                   <div class="head-a3 login-click fl">登录</div>
-                   <div class="head-a4 reg-click fl">注册</div>
+                  <div class="head-a3 login-click fl" id="loginBtn">登录</div>
+                  <div class="head-a4 reg-click fl" id="registerBtn">注册</div>
               
               </div>
               <div class="clearfix"></div>
@@ -245,47 +245,15 @@
                  <a href="">热门文章</a>
             </div>
        </div> 
-       <div class="foot-btm">网页制作by云邦</div>    
+       <div class="foot-btm">电影论坛</div>
    </div>
 </div>
 
 
-<!--登录注册弹窗-->
-<div class="mask"></div>
-<div class="login">
-    <div class="login-title">
-        <div class="login-a">登录</div>
-        <div class="login-b"></div>
-        <div class="login-c close">x</div>
-    </div>
-    <div class="login-btm">
-        <div class="login-d"><input type="text" class="login-text" placeholder="注册时填写的邮箱"></div>
-        <div class="login-d"><input type="password" class="login-pas" placeholder="密码"></div>
-        <div class="login-d"><input type="button" class="login-btn" placeholder="登录"></div>
-        <div class="login-f">
-             <a href="">忘记密码</a>
-             <span>还没有焦点账号?><a href="javascript:;" class="reg-href">点击注册</a></span>
-        </div>
-    </div>
-</div>
-
-<div class="reg">
-    <div class="login-title">
-        <div class="login-a">注册</div>
-        <div class="login-b"></div>
-        <div class="login-c close">x</div>
-    </div>
-    <div class="login-btm">
-        <div class="login-d"><input type="text" class="login-text" placeholder="邮箱/手机号"></div>
-        <div class="login-d"><input type="password" class="login-pas" placeholder="密码"></div>
-        <div class="login-d"><input type="button" class="login-btn" placeholder="注册"></div>
-        <div class="login-f">
-             <a href="">忘记密码</a>
-        </div>
-    </div>
-</div>
 <script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/jquery.SuperSlide.2.1.1.js"></script>
 <script src="js/Action.js"></script>
+<script type="text/javascript" src="js/layer/layer.js"></script>
 <script>
   $(".page a").click(function(){
 	  $(this).addClass("page-cut").siblings().removeClass("page-cut")  
@@ -298,5 +266,40 @@
 					     $(this).find(".tbq").slideToggle()
 					})
         </script>
+
+<!--注册-->
+<script type="text/javascript">
+    $("#registerBtn").click(function () {
+        layer.open({
+            type:2,
+            title:'注册',
+            fix:false,
+            maxmin:true,
+            shadeClose:true,
+            area:['500px','500px'],
+            content:['register.html','no'],
+            success: function(layero, index){
+                console.log(layero, index);
+            }
+        }) ;
+    });
+</script>
+<!--登录-->
+<script type="text/javascript">
+    $("#loginBtn").click(function () {
+        layer.open({
+            type:2,
+            title:'登录',
+            fix:false,
+            maxmin:true,
+            shadeClose:true,
+            area:['500px','500px'],
+            content:['login.html','no'],
+            success: function(layero, index){
+                console.log(layero, index);
+            }
+        }) ;
+    });
+</script>
 </body>
 </html>

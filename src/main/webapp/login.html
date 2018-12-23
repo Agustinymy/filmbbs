@@ -60,11 +60,8 @@
                 url:'/userForm/loginExit.do?uname='+uname+'&upass='+upass,
                 dataType:'json',
                 success:function (data) {
-                    alert(data.res);
+                    /*alert(data.res);*/
                     if (data.res==1){
-                        if (data.user!=null){
-                            
-                        }
                         alert('登录成功');
                         $('#cancelBtn').click();
                     } else{

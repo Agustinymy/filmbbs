@@ -4,6 +4,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.ymy.dao.IUserDao;
 import com.ymy.entity.User;
 import com.ymy.service.IUserService;
+import com.ymy.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
