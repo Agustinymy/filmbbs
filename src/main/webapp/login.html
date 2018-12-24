@@ -26,8 +26,8 @@
             <input type="password" class="form-control" id="upass" name="upass" placeholder="输入密码" style="width: 300px">
         </div>
         <div class="form-group">
-            <input type="submit" id="btnLogin" value="登录" class="btn btn-success" style="margin-left: 200px"/>
-            <input type="button" id="cancelBtn" value="取消" class="btn btn-success" style="margin-left: 200px"/>
+            <input type="submit" id="btnLogin" value="登录" class="btn btn-success"/>
+            <input type="button" id="cancelBtn" value="取消" class="btn btn-success"/>
         </div>
     </form>
 </div>
@@ -62,9 +62,6 @@
                 success:function (data) {
                     alert(data.res);
                     if (data.res==1){
-                        if (data.user!=null){
-                            
-                        }
                         alert('登录成功');
                         $('#cancelBtn').click();
                     } else{

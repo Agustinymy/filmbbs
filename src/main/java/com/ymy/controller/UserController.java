@@ -64,7 +64,7 @@ public class UserController extends ActionSupport {
      */
     @RequestMapping(value = "/checkUname")
     @ResponseBody
-    public Map<String,Object> checkUserByName(@RequestParam("uname")String uname){
+     public Map<String,Object> checkUserByName(@RequestParam("uname")String uname){
         Map<String,Object> map = new HashMap<>();
         int res=userService.selectNameExit(uname);
         if (res>0){
@@ -112,9 +112,11 @@ public class UserController extends ActionSupport {
         return "login";
     }
 
+    public IUserService getUserService() {
+        return userService;
+    }
 
-
-    public void setUserService(UserServiceImpl userService) {
+    public void setUserService(IUserService userService) {
         this.userService = userService;
     }
 
